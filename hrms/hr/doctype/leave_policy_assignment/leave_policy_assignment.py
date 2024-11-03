@@ -315,7 +315,7 @@ def create_assignment(employee, data):
 	assignment.effective_from = getdate(data.effective_from) or None
 	assignment.effective_to = getdate(data.effective_to) or None
 	assignment.leave_period = data.leave_period or None
-	assignment.carry_forward = data.carry_forwardtry:
+	assignment.carry_forward = data.carry_forwardtry
 	try:
 		assignment.save()
 		assignment.submit()
