@@ -17,6 +17,7 @@
   "to_date",
   "half_day",
   "half_day_date",
+  "include_holidays",
   "reason_section",
   "reason",
   "column_break_4",
@@ -48,6 +49,7 @@
    "read_only": 1
   },
   {
+   "fetch_from": "employee.company",
    "fieldname": "company",
    "fieldtype": "Link",
    "label": "Company",
@@ -83,7 +85,8 @@
    "depends_on": "half_day",
    "fieldname": "half_day_date",
    "fieldtype": "Date",
-   "label": "Half Day Date"
+   "label": "Half Day Date",
+   "mandatory_depends_on": "half_day"
   },
   {
    "fieldname": "reason_section",
@@ -115,14 +118,21 @@
    "options": "Attendance Request",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "include_holidays",
+   "fieldtype": "Check",
+   "label": "Include Holidays"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2019-12-16 11:49:26.943173",
+ "modified": "2023-12-20 16:18:31.864719",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Attendance Request",
+ "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
@@ -185,6 +195,7 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
+ "states": [],
  "title_field": "employee_name",
  "track_changes": 1
 }

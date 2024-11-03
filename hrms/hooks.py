@@ -4,7 +4,7 @@ app_publisher = "Frappe Technologies Pvt. Ltd."
 app_description = "Modern HR and Payroll Software"
 app_email = "contact@frappe.io"
 app_license = "GNU General Public License (v3)"
-required_apps = ["erpnext"]
+required_apps = ["frappe/erpnext"]
 
 
 # Includes in <head>
@@ -12,7 +12,13 @@ required_apps = ["erpnext"]
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/hrms/css/hrms.css"
-app_include_js = "hrms.bundle.js"
+app_include_js = [
+	"hrms.bundle.js",
+	"performance.bundle.js",
+]
+app_include_css = "hrms.bundle.css"
+
+# website
 
 # include js, css files in header of web template
 # web_include_css = "/assets/hrms/css/hrms.css"
@@ -30,14 +36,14 @@ app_include_js = "hrms.bundle.js"
 
 # include js in doctype views
 doctype_js = {
-	"Employee": "public/js/employee.js",
-	"Company": "public/js/company.js",
-	"Department": "public/js/department.js",
-	"Timesheet": "public/js/timesheet.js",
-	"Payment Entry": "public/js/payment_entry.js",
-	"Journal Entry": "public/js/journal_entry.js",
-	"Delivery Trip": "public/js/deliver_trip.js",
-	"Bank Transaction": "public/js/bank_transaction.js",
+	"Employee": "public/js/erpnext/employee.js",
+	"Company": "public/js/erpnext/company.js",
+	"Department": "public/js/erpnext/department.js",
+	"Timesheet": "public/js/erpnext/timesheet.js",
+	"Payment Entry": "public/js/erpnext/payment_entry.js",
+	"Journal Entry": "public/js/erpnext/journal_entry.js",
+	"Delivery Trip": "public/js/erpnext/delivery_trip.js",
+	"Bank Transaction": "public/js/erpnext/bank_transaction.js",
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -104,9 +110,7 @@ before_uninstall = "hrms.uninstall.before_uninstall"
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
 
-has_upload_permission = {
-	"Employee": "erpnext.setup.doctype.employee.employee.has_upload_permission"
-}
+has_upload_permission = {"Employee": "erpnext.setup.doctype.employee.employee.has_upload_permission"}
 
 # DocType Class
 # ---------------
@@ -158,11 +162,10 @@ doc_events = {
 	"Employee": {
 		"validate": "hrms.overrides.employee_master.validate_onboarding_process",
 		"on_update": "hrms.overrides.employee_master.update_approver_role",
+		"after_insert": "hrms.overrides.employee_master.update_job_applicant_and_offer",
 		"on_trash": "hrms.overrides.employee_master.update_employee_transfer",
 	},
-	"Project": {
-		"validate": "hrms.controllers.employee_boarding_controller.update_employee_boarding_status"
-	},
+	"Project": {"validate": "hrms.controllers.employee_boarding_controller.update_employee_boarding_status"},
 	"Task": {"on_update": "hrms.controllers.employee_boarding_controller.update_task"},
 }
 
@@ -212,7 +215,7 @@ bank_reconciliation_doctypes = ["Expense Claim"]
 # Testing
 # -------
 
-before_tests = "hrms.utils.before_tests"
+before_tests = "hrms.tests.test_utils.before_tests"
 
 # Overriding Methods
 # -----------------------------
@@ -255,6 +258,7 @@ override_doctype_dashboards = {
 	"Task": "hrms.overrides.dashboard_overrides.get_dashboard_for_project",
 	"Project": "hrms.overrides.dashboard_overrides.get_dashboard_for_project",
 	"Timesheet": "hrms.overrides.dashboard_overrides.get_dashboard_for_timesheet",
+	"Bank Account": "hrms.overrides.dashboard_overrides.get_dashboard_for_bank_account",
 }
 
 # exempt linked doctypes from being automatically cancelled
