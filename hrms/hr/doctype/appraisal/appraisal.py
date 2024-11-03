@@ -36,7 +36,7 @@ class Appraisal(Document):
 	def validate_existing_appraisal(self):
 		chk = frappe.db.sql(
 			"""select name from `tabAppraisal` where employee=%s
-			and (status='Submitted' or status='Completed')
+			and status='Completed'
 			and ((start_date>=%s and start_date<=%s)
 			or (end_date>=%s and end_date<=%s))""",
 			(self.employee, self.start_date, self.end_date, self.start_date, self.end_date),

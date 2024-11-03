@@ -272,8 +272,8 @@ def create_assignment_for_multiple_employees(employees, data):
 		assignment.effective_to = getdate(data.effective_to) or None
 		assignment.leave_period = data.leave_period or None
 		assignment.carry_forward = data.carry_forward
-		assignment.save()
 		try:
+			assignment.save()
 			assignment.submit()
 		except frappe.exceptions.ValidationError:
 			continue

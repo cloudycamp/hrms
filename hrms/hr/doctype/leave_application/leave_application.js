@@ -102,12 +102,12 @@ frappe.ui.form.on("Leave Application", {
 			frm.set_intro(__("Fill the form and save it"));
 		}
 
-		if (!frm.doc.employee && frappe.defaults.get_user_permissions()) {
-			const perm = frappe.defaults.get_user_permissions();
-			if (perm && perm['Employee']) {
-				frm.set_value('employee', perm['Employee'].map(perm_doc => perm_doc.doc)[0]);
-			}
-		}
+		// if (!frm.doc.employee && frappe.defaults.get_user_permissions()) {
+		// 	const perm = frappe.defaults.get_user_permissions();
+		// 	if (perm && perm['Employee']) {
+		// 		frm.set_value('employee', perm['Employee'].map(perm_doc => perm_doc.doc)[0]);
+		// 	}
+		// }
 	},
 
 	employee: function(frm) {
